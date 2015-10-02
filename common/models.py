@@ -2,7 +2,7 @@
 from django.db import models
 
 class Episode(models.Model):
-    num = models.SmallIntegerField()
+    num = models.SmallIntegerField(unique=True)
     subtitle = models.CharField(max_length=1024)
     publish_date = models.DateTimeField()
     note = models.TextField(default='', blank=True)
