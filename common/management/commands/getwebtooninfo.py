@@ -29,6 +29,12 @@ class Command(BaseCommand):
             default=1,
             help='Last episode num to fetch',
         ),
+        make_option('--latest', 
+            action='store_true', 
+            dest='latest',
+            default=False,
+            help='Last episode num to fetch',
+        ),
         make_option('--sleep', 
             action='store', 
             type='int',
@@ -48,6 +54,14 @@ class Command(BaseCommand):
         subtitle_ptn = re.compile('<meta\s+property="og:description"\s+content="([^"]+)"\s+>')
         publishdate_ptn = re.compile('<dd\s+class="date">([0-9]+).([0-9]+).([0-9]+)</dd>')
         image_ptn = re.compile('<img[^>]+src="(http://imgcomic.naver.net/webtoon/119874/[^"]+)"')
+
+        if options['latest'] == True:
+            try:
+                episode = Episode.objects.order_by('-num')[0]
+                options['start_num'] = episode.num + 1
+            except IndexError:
+                options['start_num'] = 1
+            options['end_num'] = options['start_num'] + 1
 
         for num in range(options['start_num'], options['end_num']):
             obj = Episode(num=num)
@@ -86,8 +100,12 @@ class Command(BaseCommand):
 
                 obj.save()
 
+            except Command.PatternNotMatched as e:
+                print "Episode {n} not yet uploaded.".format(n=num)
+                break
             except Exception as e:
                 print traceback.format_exc()
+                raise e
 
             time.sleep(options['sleep'])
 
