@@ -3,28 +3,76 @@
 {% block content %}
 <h2>덴마 연재 달력</h2>
 <div id="cal-heatmap"></div>
+<div class="_layer" style="display:none;"></div>
+
 <script>
-	var cal = new CalHeatMap();
-	cal.init({
-		// id: '#_pubCal',
-		start: new Date(2010, 0),
-		range: 72,
-		domain: 'month',
-		domainLabelFormat: '%Y %m',
-		subDomain: 'x_day',
-		subDomainTextFormat: '%d',
-		cellSize: 18,
-		domainGutter: 0,
-		verticalOrientation: true,
-		label: {
-			position: "left"
-		},
-		rowLimit: 31,
-		tooltip: true,
-		// considerMissingDataAsZero: true,
-		data: '/timelineData',
-		dataType: 'json'
-	});
+var $layer = $('._layer').css({
+	position: 'absolute',
+	width: 300,
+	border: '1px solid #666',
+	backgroundColor: '#fff',
+	opacity: 0.9
+});
+
+function getHtml(data) {
+	var subTitle = '<h3>' + data.subtitle + ' </h3>';
+	var pubDate = '<div>게시일: ' + data.publish_date + '</div>';
+	var characters = '<div>등장 인물: ' + data.characters + '</div>';
+	var url = '<div><a href="' + data.url + '" target="_new">보기</a></div>';
+
+	return '<div>' + subTitle + pubDate + characters + url + '</div>';
+}
+
+var cal = new CalHeatMap();
+cal.init({
+	// id: '#_pubCal',
+	start: new Date(2010, 0),
+	range: 72,
+	domain: 'month',
+	domainLabelFormat: '%Y %m',
+	subDomain: 'x_day',
+	subDomainTextFormat: '%d',
+	cellSize: 18,
+	domainGutter: 0,
+	verticalOrientation: true,
+	label: {
+		position: "left"
+	},
+	rowLimit: 31,
+	// tooltip: true,
+	data: '/timeline/js/pubDate',
+	dataType: 'json',
+	onClick: function(date, nb) {
+		var targetDate;
+		var $target;
+
+		if (!nb) {
+			return;
+		}
+
+		$target = $(d3.event.target);
+		var offset = $target.offset();
+
+		$layer.html('<div>loading...</div>').css({
+			left: offset.left - 60,
+			top: offset.top + 18 + 4,
+		}).show();
+
+		targetDate = date.getFullYear() + '-' +
+							(date.getMonth() + 1) + '-' +
+							date.getDate();
+
+		$.ajax({
+			url: '/timeline/js/episode',
+			data: {
+				date: encodeURI(targetDate)
+			},
+			success: function (result, status, xhr) {
+				$layer.html(getHtml(result));
+			}
+		});
+	}
+});
 </script>
 
 {% endblock %}

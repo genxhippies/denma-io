@@ -18,7 +18,8 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^timelineData', 'denma_io.timeline.showPubData', name='render_pubData'),
-    url(r'^timeline/', 'denma_io.timeline.showPage', name='render_timeline'),
+    url(r'^timeline/js/pubDate', 'denma_io.timeline.showPubDate', name='timeline_pubData'),
+    url(r'^timeline/js/episode', 'denma_io.timeline.showEpisode', name='timeline_episode'),
+    url(r'^timeline/', 'denma_io.timeline.showPage', name='timeline_index'),
     url(r'^', 'denma_io.timeline.showPage'),
 ]
