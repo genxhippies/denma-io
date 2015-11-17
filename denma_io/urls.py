@@ -17,8 +17,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^', 'denma_io.timeline.showPage'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^timelineData', 'denma_io.timeline.showPubData', name='render_pubData'),
     url(r'^timeline/', 'denma_io.timeline.showPage', name='render_timeline'),
+    url(r'^', 'denma_io.timeline.showPage'),
 ]
