@@ -56,7 +56,11 @@ ROOT_URLCONF = 'denma_io.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'common/templates'),
+            os.path.join(BASE_DIR, 'denma_io/templates')
+		],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,3 +108,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'resources'),
+)

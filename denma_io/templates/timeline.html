@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>덴마 연재 달력</h2>
+<div id="cal-heatmap"></div>
+<script>
+	var cal = new CalHeatMap();
+	cal.init({
+		// id: '#_pubCal',
+		start: new Date(2010, 0),
+		range: 72,
+		domain: 'month',
+		domainLabelFormat: '%Y %m',
+		subDomain: 'x_day',
+		subDomainTextFormat: '%d',
+		cellSize: 18,
+		domainGutter: 0,
+		verticalOrientation: true,
+		label: {
+			position: "left"
+		},
+		rowLimit: 31,
+		tooltip: true,
+		// considerMissingDataAsZero: true,
+		data: '/timelineData',
+		dataType: 'json'
+	});
+</script>
+
+{% endblock %}
