@@ -2,10 +2,19 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 
 from common.models import Episode
 
 import json
+
+def showJS(request):
+	jsUrl = '/static/js/common.js'
+
+	if request.user.is_authenticated():
+		jsUrl = '/static/js/admin.js'
+
+	return HttpResponseRedirect(jsUrl)
 
 def showPage(request):
 	return render(request, 'timeline.html')

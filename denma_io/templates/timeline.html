@@ -1,33 +1,51 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h2>덴마 연재 달력</h2>
-<div id="cal-heatmap"></div>
+<div class="blog-header">
+	<h3 class="blog-title">덴마 연재 달력</h3>
+	<p class="lead blog-description">덴마가 연재된 날짜를 확인해보세요.</p>
+</div>
+
 <div class="_layer" style="display:none;"></div>
 
+<div class="row">
+	<div class="col-sm-8 blog-main">
+		<div class="blog-post">
+			<div id="cal-heatmap"></div>
+		</div><!-- /.blog-post -->
+    </div><!-- /.blog-main -->
+
+	<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+		<div class="sidebar-module sidebar-module-inset">
+			<h4>Denma.io</h4>
+			<p>네이버에서 연재되는 덴마의 정보를 모아둔 곳입니다.</p>
+		</div>
+		<div class="sidebar-module">
+			<h4>메뉴</h4>
+			<ol class="list-unstyled">
+				<li><a href="/timeline">덴마 연재 달력</a></li>
+			</ol>
+		</div>
+		<div class="sidebar-module">
+			<h4>링크</h4>
+			<ol class="list-unstyled">
+				<li><a href="http://comic.naver.com/webtoon/list.nhn?titleId=119874">덴마 연재 페이지</a></li>
+				<li><a href="http://comic.naver.com/webtoon/weekday.nhn">네이버 웹툰</a></li>
+			</ol>
+		</div>
+	</div><!-- /.blog-sidebar -->
+</div><!-- /.row -->
 <script>
-var $layer = $('._layer').css({
-	position: 'absolute',
-	width: 300,
-	border: '1px solid #666',
-	backgroundColor: '#fff',
-	opacity: 0.9
-});
 
-function getHtml(data) {
-	var subTitle = '<h3>' + data.subtitle + ' </h3>';
-	var pubDate = '<div>게시일: ' + data.publish_date + '</div>';
-	var characters = '<div>등장 인물: ' + data.characters + '</div>';
-	var url = '<div><a href="' + data.url + '" target="_new">보기</a></div>';
-
-	return '<div>' + subTitle + pubDate + characters + url + '</div>';
-}
+var startMonth = new Date(2010, 0);
+// 다음달까지 표시하기 위해 2만큼 더한다.
+var range = moment().diff(moment(startMonth), 'month') + 2;
 
 var cal = new CalHeatMap();
 cal.init({
 	// id: '#_pubCal',
-	start: new Date(2010, 0),
-	range: 72,
+	start: startMonth,
+	range: range,
 	domain: 'month',
 	domainLabelFormat: '%Y %m',
 	subDomain: 'x_day',
@@ -39,7 +57,7 @@ cal.init({
 		position: "left"
 	},
 	rowLimit: 31,
-	// tooltip: true,
+	displayLegend: false,
 	data: '/timeline/js/pubDate',
 	dataType: 'json',
 	onClick: function(date, nb) {
@@ -53,11 +71,6 @@ cal.init({
 		$target = $(d3.event.target);
 		var offset = $target.offset();
 
-		$layer.html('<div>loading...</div>').css({
-			left: offset.left - 60,
-			top: offset.top + 18 + 4,
-		}).show();
-
 		targetDate = date.getFullYear() + '-' +
 							(date.getMonth() + 1) + '-' +
 							date.getDate();
@@ -67,12 +80,16 @@ cal.init({
 			data: {
 				date: encodeURI(targetDate)
 			},
+			beforeSend: function () {
+				showLoading(offset);
+			},
 			success: function (result, status, xhr) {
-				$layer.html(getHtml(result));
+				drawLayer(result);
 			}
 		});
 	}
 });
-</script>
 
+init();
+</script>
 {% endblock %}
