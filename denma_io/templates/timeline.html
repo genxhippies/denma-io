@@ -90,6 +90,21 @@ cal.init({
 	}
 });
 
-init();
 </script>
+{% verbatim %}
+<script type="text/x-handlebars-template" class="_layerTemplate">
+<div>
+	<div class="panel panel-default box-shadow">
+		<div class="panel-heading"><h3 class="panel-title">{{heading}}<button type="button" class="close _layer_close __close" aria-label="Close"><span aria-hidden="true">&times;</span></button></h3>
+		</div>
+		<div class="panel-body __body">
+			<div>{{pubDate}}</div>
+			<div>{{characters}}</div>
+			<div><a href="{{url}}" target="_new">보기</a></div>
+		</div>
+	</div>
+</div>
+</script>
+{% endverbatim %}
+<script>init();</script>
 {% endblock %}
