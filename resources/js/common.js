@@ -10,10 +10,9 @@ function init() {
 	});
 
 	$layer.on('click', function (e) {
-		e.preventDefault();
-
 		if ($(e.target).closest('.__close').length > 0) {
 			$layer.hide();
+			e.preventDefault();
 		}
 	});
 
