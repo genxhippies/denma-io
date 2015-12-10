@@ -1,6 +1,8 @@
 var $layer;
 var layerTemplate;
 
+$(document).ready(init);
+
 function init() {
     $layer = $('._layer').css({
 		position: 'absolute',

@@ -6,8 +6,6 @@
 	<p class="lead blog-description">덴마가 연재된 날짜를 확인해보세요.</p>
 </div>
 
-<div class="_layer" style="display:none;"></div>
-
 <div class="row">
 	<div class="col-sm-8 blog-main">
 		<div class="blog-post">
@@ -94,7 +92,7 @@ cal.init({
 {% verbatim %}
 <script type="text/x-handlebars-template" class="_layerTemplate">
 <div>
-	<div class="panel panel-default box-shadow">
+	<div class="panel panel-default box-shadow __popupLayer">
 		<div class="panel-heading"><h3 class="panel-title">{{heading}}<button type="button" class="close _layer_close __close" aria-label="Close"><span aria-hidden="true">&times;</span></button></h3>
 		</div>
 		<div class="panel-body __body">
@@ -106,5 +104,4 @@ cal.init({
 </div>
 </script>
 {% endverbatim %}
-<script>init();</script>
 {% endblock %}
