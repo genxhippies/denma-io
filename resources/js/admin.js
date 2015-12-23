@@ -24,9 +24,24 @@ function init() {
 	layerTemplate = Handlebars.compile($('._layerTemplate').html());
 }
 
+function getHtml(data) {
+	return layerTemplate({
+		heading: data.subtitle,
+		url: data.url
+	});
+}
+
 function drawLayer(result) {
+	var height = 0;
+	
 	if ($layer.is(':visible')) {
-		console.log('drawLayer');
+		$layer.html(getHtml(result));
+
+		height = $layer.find('.__heading').outerHeight();
+
+		$layer.find('.__toonContainer').css({
+			height: $window.height() - (height + 30 + 2) // padding + border
+		});
 	}
 }
 
