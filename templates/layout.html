@@ -28,7 +28,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
     <script type="text/javascript" src="{% static 'js/cal-heatmap.js' %}"></script>
-    <script type="text/javascript" src="/timeline/js/common.js"></script>
+    {% block userScript%}{% endblock %}{% block adminScript%}{% endblock %}
     <link rel="stylesheet" href="{%static 'css/base.css' %}" />
     <link rel="stylesheet" href="{%static 'css/blog.css' %}" />
     <link rel="stylesheet" href="{%static 'css/cal-heatmap.css' %}" />

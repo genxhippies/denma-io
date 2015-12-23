@@ -8,16 +8,14 @@ from common.models import Episode
 
 import json
 
-def showJS(request):
-	jsUrl = '/static/js/common.js'
-
-	if request.user.is_authenticated():
-		jsUrl = '/static/js/admin.js'
-
-	return HttpResponseRedirect(jsUrl)
-
 def showPage(request):
 	return render(request, 'timeline.html')
+
+def showEditPage(request):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect('/timeline')
+
+	return render(request, 'timelineEdit.html')	
 
 def showPubDate(request):
 	episodes = Episode.objects.all()
@@ -50,14 +48,4 @@ def showEpisode(request):
 	}
 
 	return HttpResponse(json.dumps(data), content_type='application/json')
-
-
-
-
-
-
-
-
-
-
 

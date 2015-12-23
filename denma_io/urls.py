@@ -18,9 +18,9 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^timeline/js/common.js$', 'denma_io.timeline.showJS', name='timeline_js'),
     url(r'^timeline/js/pubDate', 'denma_io.timeline.showPubDate', name='timeline_pubData'),
     url(r'^timeline/js/episode', 'denma_io.timeline.showEpisode', name='timeline_episode'),
+    url(r'^timeline/edit', 'denma_io.timeline.showEditPage', name='timeline_edit'),
     url(r'^timeline/', 'denma_io.timeline.showPage', name='timeline_index'),
     url(r'^$', 'denma_io.timeline.showPage'),
 ]
