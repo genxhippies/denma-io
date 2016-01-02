@@ -103,6 +103,26 @@ cal.init({
 		<div class="panel-body __body">
 			<div class="row">
 				<div class="col-sm-6">
+					<div>
+						<div>
+							<h4>이번 화 등장인물</h4>
+						</div>
+						<div>
+							{{#each starredCharacters}}
+							<button class="btn btn-primary __charOnList" data-name="{{name}}">{{name}}</button>
+							{{/each}}
+						</div>
+					</div>
+					<div style="margin-top: 20px;">
+						<div>
+							<h5>등장인물</h5>
+						</div>
+						<div>
+							{{#each allCharacters}}
+							<button class="btn btn-primary __charNotOnList" data-name="{{name}}">{{name}}</button>
+							{{/each}}
+						</div>
+					</div>
 				</div>
 				<div class="col-sm-6 __toonContainer">
 					<iframe style="width: 100%; height: 100%;" src="{{url}}" />

@@ -38,6 +38,6 @@ class Episode(models.Model):
 
     # for list_display() in Admin page
     def getCharacters(self):
-        return ', '.join([str(c) for c in self.characters.all()])
-    getCharacters.short_description = 'Characters' 
+        return ', '.join([str(c) for c in self.characters.all().order_by('name')])
+    getCharacters.short_description = 'Characters'
 
