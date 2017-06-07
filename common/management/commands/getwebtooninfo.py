@@ -51,7 +51,7 @@ class Command(BaseCommand):
             return repr(self.message)
 
     def handle(self, *args, **options):
-        subtitle_ptn = re.compile('<meta\s+property="og:description"\s+content="([^"]+)"\s+>')
+        subtitle_ptn = re.compile('<meta\s+property="og:description"\s+content="([^"]+)"\s*>')
         publishdate_ptn = re.compile('<dd\s+class="date">([0-9]+).([0-9]+).([0-9]+)</dd>')
         image_ptn = re.compile('<img[^>]+src="(http://imgcomic.naver.net/webtoon/119874/[^"]+)"')
 
